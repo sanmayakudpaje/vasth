@@ -1,0 +1,1398 @@
+None selected
+
+
+Skip to content
+Using Gmail with screen readers
+
+Conversations
+54% of 15 GB used
+Terms · Privacy · Program Policies
+Last account activity: 1 minute ago
+Details
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VASTH Restaurants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0a0f08;
+  font-family: 'Jost', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── STICKY GLOBAL NAV ── */
+.global-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px 18px;
+  background: rgba(13, 26, 20, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 0.5px solid rgba(180, 220, 130, 0.1);
+  transition: background 0.4s;
+}
+
+.global-nav.at-locations {
+  background: rgba(8, 16, 26, 0.9);
+  border-bottom-color: rgba(160, 190, 255, 0.1);
+}
+
+.nav-logo-wrap { display: flex; flex-direction: column; cursor: pointer; }
+
+.nav-logo-tag {
+  font-size: 9px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+  margin-bottom: 1px;
+}
+
+.nav-logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  color: #e8f0d8;
+  letter-spacing: 0.07em;
+  line-height: 1;
+}
+.nav-logo-name span { font-style: italic; color: #c8df90; }
+
+.nav-links { display: flex; align-items: center; gap: 4px; }
+
+.nav-link {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(220, 235, 200, 0.5);
+  padding: 8px 18px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 0.5px solid transparent;
+}
+
+.nav-link:hover {
+  color: #c8df90;
+  border-color: rgba(180, 220, 130, 0.22);
+  background: rgba(180, 220, 130, 0.05);
+}
+
+.nav-link.active-section {
+  color: #0d1a14;
+  background: #c8df90;
+  border-color: #c8df90;
+  font-weight: 500;
+}
+
+.nav-scroll-indicator {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #c8df90, #8ab4ff);
+  z-index: 300;
+  transition: width 0.1s linear;
+  width: 0%;
+}
+
+/* ── SECTION WRAPPER ── */
+.spa-section {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* ═══════════════════════════════
+   SECTION 1 — HOME / HERO
+═══════════════════════════════ */
+#section-home {
+  background: #55aa82;
+  overflow: hidden;
+}
+
+.noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-orb {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(85, 170, 130,0.08) 0%, transparent 70%);
+  top: 10%; right: -100px;
+  pointer-events: none;
+}
+
+.glow-orb2 {
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,210,80,0.06) 0%, transparent 70%);
+  bottom: 5%; left: 5%;
+  pointer-events: none;
+}
+
+.hero {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: 100px 60px 80px;
+  gap: 40px;
+  min-height: 100vh;
+}
+
+.hero-text { flex: 1; max-width: 380px; }
+
+.season-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.season-label::before {
+  content: '';
+  display: block;
+  width: 28px; height: 0.5px;
+  background: rgba(180,220,130,0.4);
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 58px;
+  font-weight: 300;
+  color: #e8f0d8;
+  line-height: 1.08;
+  margin-bottom: 22px;
+}
+.hero-headline em { font-style: italic; color: #c8df90; display: block; }
+
+.hero-desc {
+  font-size: 13px;
+  color: rgba(200,230,210,0.4);
+  line-height: 1.85;
+  font-weight: 300;
+  margin-bottom: 38px;
+  max-width: 280px;
+}
+
+.hero-actions { display: flex; align-items: center; gap: 16px; }
+
+.btn-primary {
+  padding: 14px 30px;
+  background: #c8df90;
+  color: #0d1a14;
+  border: none;
+  border-radius: 40px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover { background: #d8ef9f; }
+
+.btn-ghost {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(200,223,144,0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 300;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+}
+.btn-ghost:hover { color: #c8df90; }
+.btn-ghost svg { transition: transform 0.3s; }
+.btn-ghost:hover svg { transform: translateX(4px); }
+
+/* Drink illustration */
+.drink-scene {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 540px;
+}
+
+.drink-glow {
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,220,130,0.12) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.drink-svg-wrap {
+  position: relative;
+  z-index: 2;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+.drink-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(200,223,144,0.6);
+  text-align: center;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+
+.stats-row {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat-chip {
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(180,220,130,0.15);
+  border-radius: 12px;
+  padding: 10px 14px;
+  min-width: 90px;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: #c8df90;
+  font-weight: 300;
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(200,223,144,0.35);
+  font-weight: 300;
+  margin-top: 3px;
+}
+
+/* Scroll-down cue */
+.scroll-cue {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+.scroll-cue:hover { opacity: 0.8; }
+.scroll-cue span {
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(180,220,130,0.7);
+  font-weight: 300;
+}
+.scroll-cue-line {
+  width: 0.5px;
+  height: 32px;
+  background: rgba(180,220,130,0.35);
+  animation: scrollDrop 2s ease-in-out infinite;
+}
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  40%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  60%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* Bottom status bar */
+.bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 60px;
+  border-top: 0.5px solid rgba(180,220,130,0.08);
+  background: rgba(13,26,20,0.75);
+  backdrop-filter: blur(8px);
+}
+
+.location-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(179,255,224,0.4);
+  letter-spacing: 0.08em;
+  font-weight: 300;
+}
+.pulse-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #c8df90;
+  opacity: 0.6;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.3); }
+}
+.hours {
+  font-size: 11px;
+  color: rgba(200,223,144,0.3);
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.social-row { display: flex; gap: 14px; }
+.social-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(180,220,130,0.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+.social-dot:hover { border-color: rgba(180,220,130,0.4); }
+
+/* ═══════════════════════════════
+   DIVIDER BETWEEN SECTIONS
+═══════════════════════════════ */
+.section-divider {
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(180,220,130,0.15) 20%,
+    rgba(160,195,255,0.25) 50%,
+    rgba(180,220,130,0.15) 80%,
+    transparent 100%
+  );
+  position: relative;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════
+   SECTION 2 — LOCATIONS
+═══════════════════════════════ */
+#section-locations {
+  background: #55aa82;
+  overflow: hidden;
+}
+
+.loc-bg-art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.07;
+}
+
+.loc-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 110px 60px 100px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.loc-eyebrow {
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(160,195,255,0.35);
+  margin-bottom: 18px;
+}
+
+.loc-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  font-weight: 300;
+  color: #dce8ff;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.loc-rule {
+  width: 100px; height: 0.5px;
+  background: rgba(160,195,255,0.25);
+  margin: 26px auto 56px;
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.loc-card {
+  position: relative;
+  border: 0.5px solid rgba(160,195,255,0.18);
+  border-radius: 20px;
+  padding: 44px 36px 40px;
+  transition: all 0.35s ease;
+  background: rgba(255,255,255,0.025);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.loc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 1.5px solid transparent;
+  transition: border-color 0.35s;
+  pointer-events: none;
+}
+.loc-card:hover { background: rgba(160,195,255,0.05); transform: translateY(-4px); }
+.loc-card:hover::before { border-color: rgba(160,195,255,0.3); }
+
+.loc-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-style: italic;
+  color: rgba(160,195,255,0.9);
+  letter-spacing: 0.12em;
+  margin-bottom: 20px;
+}
+
+.loc-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 46px; font-weight: 300;
+  color: #dce8ff;
+  letter-spacing: 0.1em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+.loc-name em { display: block; font-style: italic; font-size: 38px; color: rgba(180,210,255,0.7); }
+
+.loc-meta {
+  font-size: 11px; font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,221,153,0.9);
+  margin-bottom: 36px;
+  display: flex; align-items: center; gap: 10px;
+}
+.loc-meta-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,221,153,0.9); }
+
+.loc-link {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(160,195,255,0.55);
+  transition: color 0.3s, gap 0.3s;
+  cursor: pointer;
+  margin-bottom: 14px;
+  border: none; background: none;
+}
+.loc-link:last-child { margin-bottom: 0; }
+.loc-link:hover { color: rgba(200,225,255,0.9); gap: 18px; }
+.loc-link:hover .link-arrow { border-color: rgba(160,195,255,0.55); background: rgba(160,195,255,0.08); }
+
+.link-arrow {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(160,195,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, background 0.3s;
+  flex-shrink: 0;
+}
+
+.card-corner-deco {
+  position: absolute; top: 24px; right: 24px;
+  opacity: 0.2; transition: opacity 0.3s;
+  pointer-events: none;
+}
+.loc-card:hover .card-corner-deco { opacity: 0.45; }
+
+.loc-bottom-ornament {
+  margin-top: 52px;
+  display: flex; align-items: center; gap: 16px;
+}
+.orn-line { width: 50px; height: 0.5px; background: rgba(160,195,255,0.15); }
+.orn-diamond { width: 5px; height: 5px; background: rgba(160,195,255,0.2); transform: rotate(45deg); }
+.orn-text { font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(0, 77, 0,0.9); font-weight: 350; }
+
+/* ── MODALS ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(4, 10, 18, 0.82);
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: #0e1824;
+  border: 0.5px solid rgba(160,195,255,0.22);
+  border-radius: 24px;
+  padding: 48px 44px 44px;
+  width: 420px; max-width: 90%;
+  position: relative;
+  animation: modalIn 0.28s cubic-bezier(0.34,1.28,0.64,1);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.88) translateY(16px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+.modal-close {
+  position: absolute; top: 18px; right: 20px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(160,195,255,0.2);
+  background: transparent;
+  color: rgba(160,195,255,0.45);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Jost', sans-serif; font-weight: 300;
+}
+.modal-close:hover { border-color: rgba(160,195,255,0.5); color: rgba(200,225,255,0.9); background: rgba(160,195,255,0.06); }
+
+.modal-eyebrow { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(160,195,255,0.3); font-weight: 300; margin-bottom: 10px; }
+.modal-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: #dce8ff; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.08; margin-bottom: 6px; }
+.modal-title em { font-style: italic; color: rgba(180,210,255,0.65); display: block; font-size: 28px; }
+.modal-rule { width: 50px; height: 0.5px; background: rgba(160,195,255,0.2); margin: 20px 0 28px; }
+.modal-sub { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(160,195,255,0.35); font-weight: 300; margin-bottom: 20px; }
+
+.option-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.option-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  border: 0.5px solid rgba(160,195,255,0.15);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: rgba(255,255,255,0.02);
+}
+.option-item:hover { border-color: rgba(160,195,255,0.4); background: rgba(160,195,255,0.06); transform: translateX(4px); }
+.option-item.selected { border-color: rgba(160,195,255,0.55); background: rgba(160,195,255,0.1); }
+.option-radio { width: 18px; height: 18px; border-radius: 50%; border: 1px solid rgba(160,195,255,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.2s; }
+.option-item.selected .option-radio { border-color: rgba(160,195,255,0.8); }
+.option-radio-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(160,195,255,0.8); opacity: 0; transition: opacity 0.2s; }
+.option-item.selected .option-radio-dot { opacity: 1; }
+.option-label { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: rgba(210,228,255,0.8); letter-spacing: 0.08em; text-transform: uppercase; }
+.option-item:hover .option-label, .option-item.selected .option-label { color: #dce8ff; }
+.option-tag { margin-left: auto; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,221,153,0.55); font-weight: 300; }
+
+.modal-confirm-btn {
+  width: 100%;
+  padding: 16px 28px;
+  background: transparent;
+  border: 1px solid rgba(160,195,255,0.3);
+  border-radius: 50px;
+  color: rgba(180,210,255,0.7);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.modal-confirm-btn:hover { background: rgba(160,195,255,0.08); border-color: rgba(160,195,255,0.6); color: #dce8ff; }
+.modal-confirm-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.modal-confirm-btn:disabled:hover { background: transparent; border-color: rgba(160,195,255,0.3); color: rgba(180,210,255,0.7); }
+
+/* ── CONFIRMATION TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #0e1824;
+  border: 0.5px solid rgba(160,195,255,0.3);
+  border-radius: 50px;
+  padding: 14px 28px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 300;
+  letter-spacing: 0.12em;
+  color: rgba(200,225,255,0.85);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34,1.28,0.64,1);
+  z-index: 600;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast-dot { width: 6px; height: 6px; border-radius: 50%; background: #c8df90; animation: pulse 1.5s infinite; }
+
+/* ── BOOKING GUEST FIELDS ── */
+.booking-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.field-label {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(160,195,255,0.35);
+  font-weight: 300;
+  margin-bottom: 6px;
+}
+
+.field-input {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(160,195,255,0.2);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: #dce8ff;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.25s, background 0.25s;
+}
+.field-input::placeholder { color: rgba(160,195,255,0.2); font-style: italic; }
+.field-input:focus { border-color: rgba(160,195,255,0.5); background: rgba(160,195,255,0.04); }
+
+/* Guest counter */
+.guest-counter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(160,195,255,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.counter-btn {
+  width: 46px;
+  height: 52px;
+  background: transparent;
+  border: none;
+  color: rgba(160,195,255,0.5);
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  flex-shrink: 0;
+}
+.counter-btn:hover { background: rgba(160,195,255,0.08); color: #dce8ff; }
+.counter-btn:active { transform: scale(0.92); }
+
+.counter-val {
+  flex: 1;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  color: #dce8ff;
+  letter-spacing: 0.08em;
+  padding: 0 8px;
+  user-select: none;
+}
+
+.counter-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(160,195,255,0.25);
+  font-weight: 300;
+  padding-right: 16px;
+  font-family: 'Jost', sans-serif;
+}
+
+/* ── MENU INFO POPUP ── */
+.menu-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  background: rgba(4,10,18,0.75);
+  align-items: center;
+  justify-content: center;
+}
+.menu-popup-overlay.open { display: flex; }
+
+.menu-popup {
+  background: #0d1a14;
+  border: 0.5px solid rgba(180,220,130,0.25);
+  border-radius: 24px;
+  padding: 52px 48px 48px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+  text-align: center;
+  animation: modalIn 0.3s cubic-bezier(0.34,1.28,0.64,1);
+}
+
+.menu-popup-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(180,220,130,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.menu-popup-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(0, 179, 60,0.9);
+  font-weight: 350;
+  margin-bottom: 14px;
+}
+
+.menu-popup-msg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: #e8f0d8;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+.menu-popup-sub {
+  font-size: 11px;
+  font-weight: 350;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 179, 60,0.9);
+  margin-bottom: 36px;
+}
+
+.menu-popup-location {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #c8df90;
+  margin-bottom: 32px;
+  letter-spacing: 0.06em;
+}
+
+.menu-popup-close {
+  width: 100%;
+  padding: 14px 28px;
+  background: rgba(180,220,130,0.08);
+  border: 1px solid rgba(180,220,130,0.3);
+  border-radius: 50px;
+  color: rgba(200,223,144,0.8);
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.menu-popup-close:hover { background: rgba(180,220,130,0.15); border-color: rgba(180,220,130,0.55); color: #c8df90; }
+
+.menu-popup-x {
+  position: absolute;
+  top: 16px; right: 18px;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(180,220,130,0.18);
+  background: transparent;
+  color: rgba(180,220,130,0.35);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-family: 'Jost', sans-serif;
+}
+.menu-popup-x:hover { border-color: rgba(180,220,130,0.5); color: #c8df90; }
+</style>
+</head>
+<body>
+
+<!-- ── SCROLL PROGRESS BAR ── -->
+<div class="nav-scroll-indicator" id="scrollBar"></div>
+
+<!-- ══════════════════════════════════════
+     STICKY GLOBAL NAV
+══════════════════════════════════════ -->
+<nav class="global-nav" id="globalNav">
+  <div class="nav-logo-wrap" id="navHome">
+    <span class="nav-logo-tag">Est. 2022</span>
+    <div class="nav-logo-name">VASTH <span>Restaurants</span></div>
+  </div>
+  <div class="nav-links">
+    <div class="nav-link active-section" id="navLinkHome" onclick="scrollToSection('section-home', this)">Home</div>
+    <div class="nav-link" id="navLinkLocations" onclick="scrollToSection('section-locations', this)">Locations</div>
+    <div class="nav-link" id="navLinkOrders">Orders Menu</div>
+     </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     SECTION 1 — HOME
+══════════════════════════════════════ -->
+<section class="spa-section" id="section-home">
+  <div class="noise"></div>
+  <div class="glow-orb"></div>
+  <div class="glow-orb2"></div>
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="season-label">Summer Signatures</div>
+      <h1 class="hero-headline">
+        Crafted for<br>
+        <em>Every Moment</em>
+      </h1>
+      <p class="hero-desc">Artisanal flavours, seasonal ingredients, and a dining experience that lingers long after the last sip.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="scrollToSection('section-locations', document.getElementById('navLinkLocations'))">Explore Locations</button>
+      </div>
+    </div>
+
+    <div class="drink-scene">
+      <div class="drink-glow"></div>
+      <div class="drink-svg-wrap">
+        <svg width="240" height="430" viewBox="0 0 240 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="88" cy="200" rx="3" ry="5" fill="rgba(200,235,255,0.18)"/>
+          <ellipse cx="152" cy="260" rx="2" ry="4" fill="rgba(200,235,255,0.15)"/>
+          <ellipse cx="78" cy="310" rx="2" ry="3.5" fill="rgba(200,235,255,0.12)"/>
+          <ellipse cx="162" cy="230" rx="1.5" ry="3" fill="rgba(200,235,255,0.1)"/>
+          <ellipse cx="95" cy="340" rx="2" ry="3" fill="rgba(200,235,255,0.1)"/>
+          <ellipse cx="120" cy="406" rx="42" ry="8" fill="rgba(0,0,0,0.25)"/>
+          <rect x="90" y="390" width="60" height="14" rx="4" fill="rgba(180,220,255,0.12)" stroke="rgba(200,235,255,0.2)" stroke-width="0.8"/>
+          <rect x="113" y="375" width="14" height="18" rx="3" fill="rgba(180,220,255,0.1)" stroke="rgba(200,235,255,0.15)" stroke-width="0.8"/>
+          <rect x="96" y="340" width="28" height="24" rx="4" fill="rgba(200,235,255,0.25)" stroke="rgba(255,255,255,0.3)" stroke-width="0.7" transform="rotate(-8 96 340)"/>
+          <rect x="118" y="338" width="26" height="22" rx="4" fill="rgba(200,235,255,0.2)" stroke="rgba(255,255,255,0.25)" stroke-width="0.7" transform="rotate(5 118 338)"/>
+          <rect x="104" y="350" width="22" height="18" rx="3" fill="rgba(220,245,255,0.18)" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" transform="rotate(-3 104 350)"/>
+          <line x1="100" y1="343" x2="106" y2="349" stroke="rgba(255,255,255,0.4)" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="122" y1="341" x2="128" y2="347" stroke="rgba(255,255,255,0.3)" stroke-width="0.8" stroke-linecap="round"/>
+          <path d="M82 190 Q80 295 88 370 L152 370 Q160 295 158 190 Z" fill="rgba(140,200,100,0.22)"/>
+          <path d="M82 190 Q81 215 82 230 L158 230 Q159 215 158 190 Z" fill="rgba(180,230,130,0.15)"/>
+          <ellipse cx="108" cy="290" rx="10" ry="5" fill="rgba(100,180,80,0.5)" transform="rotate(-20 108 290)"/>
+          <ellipse cx="128" cy="280" rx="9" ry="4.5" fill="rgba(120,200,90,0.45)" transform="rotate(15 128 280)"/>
+          <ellipse cx="118" cy="305" rx="8" ry="4" fill="rgba(110,185,85,0.4)" transform="rotate(-5 118 305)"/>
+          <line x1="100" y1="289" x2="116" y2="292" stroke="rgba(60,120,40,0.5)" stroke-width="0.8" stroke-linecap="round"/>
+          <line x1="121" y1="279" x2="136" y2="281" stroke="rgba(60,120,40,0.45)" stroke-width="0.8" stroke-linecap="round"/>
+          <rect x="136" y="90" width="7" height="290" rx="3.5" fill="rgba(255,220,100,0.55)" stroke="rgba(255,200,60,0.4)" stroke-width="0.5"/>
+          <rect x="137.5" y="95" width="2" height="280" rx="1" fill="rgba(255,255,200,0.3)"/>
+          <path d="M82 190 Q76 250 80 320 Q84 360 88 370 L152 370 Q156 360 160 320 Q164 250 158 190 Z" fill="rgba(200,230,255,0.06)" stroke="rgba(200,235,255,0.35)" stroke-width="1.2"/>
+          <ellipse cx="120" cy="190" rx="38" ry="9" fill="rgba(200,235,255,0.08)" stroke="rgba(200,235,255,0.4)" stroke-width="1"/>
+          <path d="M86 210 Q84 270 86 330" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <path d="M150 220 Q152 270 150 320" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <g transform="translate(148, 138) rotate(35)">
+            <circle cx="0" cy="0" r="32" fill="#F5C842" stroke="#D4A010" stroke-width="1.2"/>
+            <circle cx="0" cy="0" r="28" fill="#F7D04A"/>
+            <circle cx="0" cy="0" r="24" fill="#FDE97A"/>
+            <line x1="0" y1="-24" x2="0" y2="24" stroke="#C8980E" stroke-width="0.8"/>
+            <line x1="-24" y1="0" x2="24" y2="0" stroke="#C8980E" stroke-width="0.8"/>
+            <line x1="-17" y1="-17" x2="17" y2="17" stroke="#C8980E" stroke-width="0.8"/>
+            <line x1="17" y1="-17" x2="-17" y2="17" stroke="#C8980E" stroke-width="0.8"/>
+            <ellipse cx="8" cy="6" rx="2.5" ry="1.5" fill="rgba(180,130,0,0.4)" transform="rotate(-20 8 6)"/>
+            <ellipse cx="-7" cy="-8" rx="2.5" ry="1.5" fill="rgba(180,130,0,0.35)" transform="rotate(15 -7 -8)"/>
+            <ellipse cx="-4" cy="12" rx="2" ry="1.2" fill="rgba(180,130,0,0.3)" transform="rotate(-10 -4 12)"/>
+            <circle cx="0" cy="0" r="4" fill="rgba(200,150,0,0.3)"/>
+            <path d="M-14,-20 Q-20,-12 -22,0" stroke="rgba(255,255,200,0.6)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          </g>
+          <path d="M149 188 L155 194" stroke="rgba(200,235,255,0.5)" stroke-width="1" stroke-linecap="round"/>
+          <circle cx="100" cy="350" r="2" fill="rgba(220,245,255,0.3)"/>
+          <circle cx="115" cy="320" r="1.5" fill="rgba(220,245,255,0.25)"/>
+          <circle cx="130" cy="340" r="1.8" fill="rgba(220,245,255,0.2)"/>
+          <circle cx="107" cy="295" r="1.2" fill="rgba(220,245,255,0.18)"/>
+          <circle cx="123" cy="270" r="1.5" fill="rgba(220,245,255,0.15)"/>
+        </svg>
+        <div class="drink-name">Signature Lime Refresher</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-chip"><div class="stat-num">24+</div><div class="stat-lbl">Menu Items</div></div>
+        <div class="stat-chip"><div class="stat-num">4.9</div><div class="stat-lbl">Rating</div></div>
+        <div class="stat-chip"><div class="stat-num">2</div><div class="stat-lbl">Locations</div></div>
+      </div>
+    </div>
+  </section>
+
+  
+  <div class="bottom-bar">
+    <div class="location-pill"><div class="pulse-dot"></div>Now open · Jakkur, Bengaluru</div>
+    <div class="hours">Mon – Sun &nbsp;·&nbsp; 11:00 AM – 11:00 PM</div>
+    <div class="social-row">
+      <div class="social-dot">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <rect x="1" y="1" width="8" height="8" rx="2.5" stroke="rgba(200,223,144,0.45)" stroke-width="1"/>
+          <circle cx="5" cy="5" r="2" stroke="rgba(200,223,144,0.45)" stroke-width="1"/>
+          <circle cx="7.5" cy="2.5" r="0.7" fill="rgba(200,223,144,0.45)"/>
+        </svg>
+      </div>
+      <div class="social-dot">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path d="M1 8L4.5 4.5M4.5 4.5L3 1h6L7.5 4.5M4.5 4.5L6 8" stroke="rgba(200,223,144,0.45)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════
+     SECTION 2 — LOCATIONS & BOOKINGS
+══════════════════════════════════════ -->
+<section class="spa-section" id="section-locations">
+
+  <div class="loc-bg-art">
+    <svg width="900" height="700" viewBox="0 0 900 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#8ab4ff" stroke-linecap="round">
+        <circle cx="450" cy="350" r="260" stroke-width="0.8" stroke-dasharray="3,12"/>
+        <circle cx="450" cy="350" r="200" stroke-width="0.5" stroke-dasharray="2,18"/>
+        <circle cx="450" cy="350" r="310" stroke-width="0.4" stroke-dasharray="1,20"/>
+        <line x1="190" y1="350" x2="710" y2="350" stroke-width="0.6" stroke-dasharray="4,10"/>
+        <line x1="450" y1="90" x2="450" y2="610" stroke-width="0.6" stroke-dasharray="4,10"/>
+        <line x1="266" y1="166" x2="634" y2="534" stroke-width="0.4" stroke-dasharray="2,14"/>
+        <line x1="634" y1="166" x2="266" y2="534" stroke-width="0.4" stroke-dasharray="2,14"/>
+        <circle cx="450" cy="350" r="6" stroke-width="1.2"/>
+        <circle cx="450" cy="350" r="2" stroke-width="1.5"/>
+        <circle cx="280" cy="220" r="8" stroke-width="1"/>
+        <path d="M276 220 L280 224 L286 216" stroke-width="1.2" fill="none"/>
+        <circle cx="620" cy="220" r="8" stroke-width="1"/>
+        <path d="M616 220 L620 224 L626 216" stroke-width="1.2" fill="none"/>
+        <path d="M280 212 L450 344" stroke-width="0.5" stroke-dasharray="3,8"/>
+        <path d="M620 212 L450 344" stroke-width="0.5" stroke-dasharray="3,8"/>
+        <path d="M100 100 Q130 90 128 115 Q126 140 155 132" stroke-width="1"/>
+        <path d="M750 540 Q780 530 778 555 Q776 580 805 572" stroke-width="0.8"/>
+        <rect x="60" y="300" width="40" height="55" rx="4" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <path d="M60 315 L100 315" stroke-width="0.5"/>
+        <path d="M65 328 L95 328" stroke-width="0.5"/>
+        <path d="M65 340 L90 340" stroke-width="0.5"/>
+        <path d="M65 352 L95 352" stroke-width="0.5"/>
+        <rect x="800" y="280" width="40" height="55" rx="4" stroke-width="0.8" fill="none" opacity="0.5"/>
+        <path d="M800 295 L840 295" stroke-width="0.5"/>
+        <path d="M805 308 L835 308" stroke-width="0.5"/>
+        <path d="M805 320 L830 320" stroke-width="0.5"/>
+        <path d="M805 332 L835 332" stroke-width="0.5"/>
+        <path d="M180 500 Q200 480 205 500 Q210 520 195 530 Q180 540 185 558" stroke-width="0.9" fill="none"/>
+        <path d="M700 150 Q718 132 722 152 Q726 172 712 180 Q698 188 702 205" stroke-width="0.9" fill="none"/>
+        <path d="M350 580 Q380 570 395 585 Q410 600 390 610 Q370 620 360 610" stroke-width="0.8" fill="none"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="loc-content">
+   
+    <div class="loc-heading">SEE LOCATIONS</div>
+    <div class="loc-rule"></div>
+
+    <div class="locations-grid">
+
+      <!-- Card 1 – Crystal Empire -->
+      <div class="loc-card">
+        <div class="card-corner-deco">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="14" stroke="#8ab4ff" stroke-width="0.8" stroke-dasharray="2,5"/>
+            <circle cx="18" cy="18" r="3" stroke="#8ab4ff" stroke-width="1"/>
+            <line x1="18" y1="4" x2="18" y2="8" stroke="#8ab4ff" stroke-width="1"/>
+            <line x1="18" y1="28" x2="18" y2="32" stroke="#8ab4ff" stroke-width="1"/>
+            <line x1="4" y1="18" x2="8" y2="18" stroke="#8ab4ff" stroke-width="1"/>
+            <line x1="28" y1="18" x2="32" y2="18" stroke="#8ab4ff" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="loc-num">Location 01</div>
+        <div class="loc-name" id="menuLink1">Crystal<em>Empire</em></div>
+        <div class="loc-meta">
+          <span class="loc-meta-dot"></span>In-Castle-Cafe
+          <span class="loc-meta-dot"></span>Full Menu
+        </div>
+        <div class="loc-link" id="menuLink1b">
+          See Menu
+          <span class="link-arrow"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="rgba(160,195,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="loc-link" id="bookBtn1">
+          Book Crystal Empire
+          <span class="link-arrow"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="rgba(160,195,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </div>
+
+      <!-- Card 2 – Sky Rose -->
+      <div class="loc-card">
+        <div class="card-corner-deco">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M18 4 L20.5 11.5 L28.5 11.5 L22 16.5 L24.5 24 L18 19.5 L11.5 24 L14 16.5 L7.5 11.5 L15.5 11.5 Z" stroke="#8ab4ff" stroke-width="0.9" fill="none"/>
+            <circle cx="18" cy="15" r="2.5" stroke="#8ab4ff" stroke-width="0.8"/>
+          </svg>
+        </div>
+        <div class="loc-num">Location 02</div>
+        <div class="loc-name" id="menuLink2">Sky<em>Rose</em></div>
+        <div class="loc-meta">
+          <span class="loc-meta-dot"></span>Fine Dining
+          <span class="loc-meta-dot"></span>Full Menu
+        </div>
+        <div class="loc-link" id="menuLink2b">
+          See Menu
+          <span class="link-arrow"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="rgba(160,195,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="loc-link" id="bookBtn2">
+          Book Sky Rose
+          <span class="link-arrow"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="rgba(160,195,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="loc-bottom-ornament">
+      <div class="orn-line"></div>
+      <div class="orn-diamond"></div>
+      <div class="orn-text">VASTH · Est. 2022</div>
+      <div class="orn-diamond"></div>
+      <div class="orn-line"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: Crystal Empire -->
+  <div class="modal-overlay" id="modalCrystal">
+    <div class="modal">
+      <button class="modal-close" id="closeCrystal">&#x2715;</button>
+      <div class="modal-eyebrow">Reserve Your Experience</div>
+      <div class="modal-title">Crystal<em>Empire</em></div>
+      <div class="modal-rule"></div>
+
+      <div class="booking-fields">
+        <div>
+          <div class="field-label">Your Name</div>
+          <input class="field-input" type="text" id="nameCrystal" placeholder="e.g. Arjun Mehta" autocomplete="off"/>
+        </div>
+        <div>
+          <div class="field-label">Number of Guests</div>
+          <div class="guest-counter">
+            <button class="counter-btn" id="decCrystal">&#8722;</button>
+            <span class="counter-val" id="countCrystal">2</span>
+            <button class="counter-btn" id="incCrystal">&#43;</button>
+            <span class="counter-label">people</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-sub">Choose Your Dining Experience</div>
+      <div class="option-list" id="optionsCrystal">
+        <div class="option-item" data-value="VIP"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">VIP</div><div class="option-tag">Exclusive</div></div>
+        <div class="option-item" data-value="Continental"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">Continental</div><div class="option-tag">Signature</div></div>
+        <div class="option-item" data-value="Traditional"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">Traditional</div><div class="option-tag">Heritage</div></div>
+      </div>
+      <button class="modal-confirm-btn" id="confirmCrystal" disabled>
+        Confirm Booking
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="rgba(180,210,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: Sky Rose -->
+  <div class="modal-overlay" id="modalSkyrose">
+    <div class="modal">
+      <button class="modal-close" id="closeSkyrose">&#x2715;</button>
+      <div class="modal-eyebrow">Reserve Your Experience</div>
+      <div class="modal-title">Sky<em>Rose</em></div>
+      <div class="modal-rule"></div>
+
+      <div class="booking-fields">
+        <div>
+          <div class="field-label">Your Name</div>
+          <input class="field-input" type="text" id="nameSkyrose" placeholder="e.g. Priya Sharma" autocomplete="off"/>
+        </div>
+        <div>
+          <div class="field-label">Number of Guests</div>
+          <div class="guest-counter">
+            <button class="counter-btn" id="decSkyrose">&#8722;</button>
+            <span class="counter-val" id="countSkyrose">2</span>
+            <button class="counter-btn" id="incSkyrose">&#43;</button>
+            <span class="counter-label">people</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-sub">Choose Your Dining Experience</div>
+      <div class="option-list" id="optionsSkyrose">
+        <div class="option-item" data-value="VIP"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">VIP</div><div class="option-tag">Exclusive</div></div>
+        <div class="option-item" data-value="Good"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">Good</div><div class="option-tag">Premium</div></div>
+        <div class="option-item" data-value="Normal"><div class="option-radio"><div class="option-radio-dot"></div></div><div class="option-label">Normal</div><div class="option-tag">Classic</div></div>
+      </div>
+      <button class="modal-confirm-btn" id="confirmSkyrose" disabled>
+        Confirm Booking
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="rgba(180,210,255,0.7)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MENU INFO POPUP -->
+  <div class="menu-popup-overlay" id="menuPopup">
+    <div class="menu-popup">
+      <button class="menu-popup-x" id="menuPopupX">&#x2715;</button>
+      <div class="menu-popup-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 6h16M4 10h16M4 14h10" stroke="rgba(180,220,130,0.65)" stroke-width="1.2" stroke-linecap="round"/>
+          <rect x="3" y="3" width="18" height="18" rx="3" stroke="rgba(180,220,130,0.3)" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div class="menu-popup-eyebrow">Dining at VASTH</div>
+      <div class="menu-popup-msg">Menu will be served<br>at the restaurant</div>
+      <div class="menu-popup-location" id="menuPopupLocation">Crystal Empire</div>
+      <div class="menu-popup-sub">Present this to your host on arrival</div>
+      <button class="menu-popup-close" id="menuPopupClose">Got it</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-dot"></div>
+  <span id="toastMsg">Booking confirmed!</span>
+</div>
+
+<script>
+/* ── SCROLL TO SECTION ── */
+function scrollToSection(id, navEl) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var offset = document.getElementById('globalNav').offsetHeight;
+  var top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  window.scrollTo({ top: top, behavior: 'smooth' });
+  setActiveNav(navEl);
+}
+
+function setActiveNav(activeEl) {
+  document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active-section'); });
+  if (activeEl) activeEl.classList.add('active-section');
+}
+
+/* ── SCROLL SPY ── */
+window.addEventListener('scroll', function() {
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('scrollBar').style.width = (docHeight > 0 ? (scrollTop / docHeight * 100) : 0) + '%';
+  var locTop = document.getElementById('section-locations').getBoundingClientRect().top;
+  var nav = document.getElementById('globalNav');
+  if (locTop <= 80) {
+    nav.classList.add('at-locations');
+    setActiveNav(document.getElementById('navLinkLocations'));
+  } else {
+    nav.classList.remove('at-locations');
+    setActiveNav(document.getElementById('navLinkHome'));
+  }
+});
+
+document.getElementById('navHome').addEventListener('click', function() {
+  scrollToSection('section-home', document.getElementById('navLinkHome'));
+});
+
+/* ── GUEST COUNTER ── */
+function makeCounter(countId, decId, incId, min, max) {
+  var val = 2;
+  var display = document.getElementById(countId);
+  function update() { display.textContent = val; }
+  document.getElementById(decId).addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (val > min) { val--; update(); }
+  });
+  document.getElementById(incId).addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (val < max) { val++; update(); }
+  });
+  return function() { return val; };
+}
+var getCountCrystal = makeCounter('countCrystal', 'decCrystal', 'incCrystal', 1, 20);
+var getCountSkyrose  = makeCounter('countSkyrose',  'decSkyrose',  'incSkyrose',  1, 20);
+
+/* ── MODAL OPTIONS + CONFIRM UNLOCK ── */
+function setupModal(listId, confirmBtnId, nameId) {
+  var list = document.getElementById(listId);
+  var btn  = document.getElementById(confirmBtnId);
+  var nameInput = document.getElementById(nameId);
+  var selected = null;
+
+  function checkReady() {
+    btn.disabled = !(selected && nameInput.value.trim().length > 0);
+  }
+
+  list.querySelectorAll('.option-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      list.querySelectorAll('.option-item').forEach(function(i) { i.classList.remove('selected'); });
+      item.classList.add('selected');
+      selected = item.dataset.value;
+      checkReady();
+    });
+  });
+
+  nameInput.addEventListener('input', checkReady);
+  return function() { return selected; };
+}
+
+var getSelectedCrystal = setupModal('optionsCrystal', 'confirmCrystal', 'nameCrystal');
+var getSelectedSkyrose  = setupModal('optionsSkyrose',  'confirmSkyrose',  'nameSkyrose');
+
+/* ── OPEN / CLOSE MODALS ── */
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) {
+  var el = document.getElementById(id);
+  el.classList.remove('open');
+  el.querySelectorAll('.option-item').forEach(function(i) { i.classList.remove('selected'); });
+  el.querySelector('.modal-confirm-btn').disabled = true;
+  el.querySelector('.field-input').value = '';
+  var countEl = el.querySelector('.counter-val');
+  if (countEl) countEl.textContent = '2';
+}
+
+document.getElementById('bookBtn1').addEventListener('click', function(e) { e.stopPropagation(); openModal('modalCrystal'); });
+document.getElementById('bookBtn2').addEventListener('click', function(e) { e.stopPropagation(); openModal('modalSkyrose'); });
+document.getElementById('closeCrystal').addEventListener('click', function() { closeModal('modalCrystal'); });
+document.getElementById('closeSkyrose').addEventListener('click',  function() { closeModal('modalSkyrose'); });
+document.getElementById('modalCrystal').addEventListener('click', function(e) { if (e.target === this) closeModal('modalCrystal'); });
+document.getElementById('modalSkyrose').addEventListener('click',  function(e) { if (e.target === this) closeModal('modalSkyrose'); });
+
+/* ── TOAST ── */
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 4000);
+}
+
+/* ── CONFIRM BOOKINGS ── */
+function reserveBooking(data, successMsg, modalId) {
+  fetch('/reserve', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(response) { return response.json().then(function(body) { return { status: response.status, body: body }; }); })
+  .then(function(result) {
+    if (result.status >= 200 && result.status < 300) {
+      closeModal(modalId);
+      showToast(successMsg);
+    } else {
+      console.error(result.body);
+      showToast('Booking failed. Please try again.');
+    }
+  })
+  .catch(function(error) {
+    console.error(error);
+    showToast('Booking failed. Please try again.');
+  });
+}
+
+document.getElementById('confirmCrystal').addEventListener('click', function() {
+  var sel   = getSelectedCrystal();
+  var name  = document.getElementById('nameCrystal').value.trim();
+  var count = getCountCrystal();
+  if (sel && name) {
+    reserveBooking(
+      {
+        location: 'Crystal Empire',
+        name: name,
+        guests: count,
+        dining_experience: sel
+      },
+      name + ' · Crystal Empire · ' + sel + ' · ' + count + (count === 1 ? ' guest' : ' guests') + ' — confirmed!',
+      'modalCrystal'
+    );
+  }
+});
+
+document.getElementById('confirmSkyrose').addEventListener('click', function() {
+  var sel   = getSelectedSkyrose();
+  var name  = document.getElementById('nameSkyrose').value.trim();
+  var count = getCountSkyrose();
+  if (sel && name) {
+    reserveBooking(
+      {
+        location: 'Sky Rose',
+        name: name,
+        guests: count,
+        dining_experience: sel
+      },
+      name + ' · Sky Rose · ' + sel + ' · ' + count + (count === 1 ? ' guest' : ' guests') + ' — confirmed!',
+      'modalSkyrose'
+    );
+  }
+});
+
+/* ── MENU INFO POPUP ── */
+function openMenuPopup(locationName) {
+  document.getElementById('menuPopupLocation').textContent = locationName;
+  document.getElementById('menuPopup').classList.add('open');
+}
+function closeMenuPopup() {
+  document.getElementById('menuPopup').classList.remove('open');
+}
+
+document.getElementById('menuPopupClose').addEventListener('click', closeMenuPopup);
+document.getElementById('menuPopupX').addEventListener('click',     closeMenuPopup);
+document.getElementById('menuPopup').addEventListener('click', function(e) { if (e.target === this) closeMenuPopup(); });
+
+document.getElementById('menuLink1').addEventListener('click',  function(e) { e.stopPropagation(); openMenuPopup('Crystal Empire'); });
+document.getElementById('menuLink1b').addEventListener('click', function(e) { e.stopPropagation(); openMenuPopup('Crystal Empire'); });
+document.getElementById('menuLink2').addEventListener('click',  function(e) { e.stopPropagation(); openMenuPopup('Sky Rose'); });
+document.getElementById('menuLink2b').addEventListener('click', function(e) { e.stopPropagation(); openMenuPopup('Sky Rose'); });
+</script>
+</body>
+</html>
