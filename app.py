@@ -31,17 +31,22 @@ def reserve():
     if not name or not dining_experience or not location or not isinstance(guests, int) or guests < 1:
         return jsonify({'error': 'Invalid reservation data'}), 400
 
-    response = supabase.table('orders').insert({
-        'name': name,
-        'guests': guests,
-        'dining_experience': dining_experience,
-        'location': location
-    }).execute()
+    try:
+        response = supabase.table('orders').insert({
+            'name': name,
+            'guests': guests,
+            'dining_experience': dining_experience,
+            'location': location
+        }).execute()
 
-    if hasattr(response, 'error') and response.error:
-        return jsonify({'error': str(response.error)}), 500
+        if hasattr(response, 'error') and response.error:
+            print(f"Supabase error: {response.error}")
+            return jsonify({'error': str(response.error)}), 500
 
-    return jsonify({'success': True, 'order': response.data}), 201
+        return jsonify({'success': True, 'order': response.data}), 201
+    except Exception as e:
+        print(f"Exception during insert: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
