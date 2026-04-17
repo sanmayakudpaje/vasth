@@ -11,6 +11,9 @@ app = Flask(__name__)
 # Initialize Supabase client
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_KEY")
+print(f"Supabase URL: {url}")
+print(f"Supabase Key: {'***' if key else 'Not Set'}")
+
 supabase: Client = create_client(url, key)
 
 @app.route('/')
