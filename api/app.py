@@ -10,7 +10,7 @@ app = Flask(__name__, template_folder='templates')
 
 # Initialize Supabase client
 url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_KEY")
+key = os.getenv("SUPABASE_ANON_KEY")
 print(f"Supabase URL: {url}")
 print(f"Supabase Key: {key}")
 
