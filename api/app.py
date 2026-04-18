@@ -2,22 +2,50 @@ import os
 from flask import Flask, render_template, request, jsonify
 from supabase import create_client, Client
 from dotenv import load_dotenv
+from typing import Optional, Tuple
 
 load_dotenv()  # Load environment variables from .env file
 
 # Initialize Flask app
 app = Flask(__name__, template_folder='templates')
 
+def _clean_env(value: Optional[str]) -> Optional[str]:
+    if value is None:
+        return None
+    cleaned = value.strip()
+    # Vercel/UI env values are sometimes pasted with wrapping quotes.
+    if (cleaned.startswith("'") and cleaned.endswith("'")) or (
+        cleaned.startswith('"') and cleaned.endswith('"')
+    ):
+        cleaned = cleaned[1:-1].strip()
+    return cleaned or None
+
+
+def _resolve_supabase_key() -> Tuple[Optional[str], Optional[str]]:
+    # Ordered by preferred privilege level and common naming.
+    key_candidates = [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_KEY",
+        "SUPABASE_ANON_KEY",
+        "SUPABASE_PUBLISHABLE_KEY",
+    ]
+    for key_name in key_candidates:
+        key_value = _clean_env(os.getenv(key_name))
+        if key_value:
+            return key_name, key_value
+    return None, None
+
+
 # Initialize Supabase client
-url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_KEY")
-print(f"Supabase URL: {url}")
-print(f"Supabase Key set: {'yes' if key else 'no'}")
+url = _clean_env(os.getenv("SUPABASE_URL"))
+key_name, key = _resolve_supabase_key()
+print(f"Supabase URL set: {'yes' if url else 'no'}")
+print(f"Supabase key source: {key_name or 'none'}")
 
 if not url or not key:
     raise RuntimeError(
         "Supabase credentials are missing. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY "
-        "or SUPABASE_KEY in Vercel environment variables."
+        "or SUPABASE_KEY (or SUPABASE_ANON_KEY) in Vercel environment variables."
     )
 
 supabase: Client = create_client(url, key)
