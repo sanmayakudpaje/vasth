@@ -1,3 +1,4 @@
 Flask==2.3.3
 python-dotenv==1.0.0
-supabase==2.3.0
+# 2.3.0 rejects non-JWT keys (e.g. sb_publishable_...) with SupabaseException("Invalid API key").
+supabase==2.28.3

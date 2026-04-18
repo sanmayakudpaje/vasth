@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template, request, jsonify
-from supabase import create_client, Client
+from supabase import SupabaseException, create_client, Client
 from dotenv import load_dotenv
 from typing import Optional, Tuple
 
@@ -48,7 +48,16 @@ if not url or not key:
         "or SUPABASE_KEY (or SUPABASE_ANON_KEY) in Vercel environment variables."
     )
 
-supabase: Client = create_client(url, key)
+try:
+    supabase: Client = create_client(url, key)
+except SupabaseException as e:
+    if "Invalid API key" in str(e) and not key.startswith("eyJ"):
+        raise RuntimeError(
+            "Supabase Python client rejected this key format. Use the legacy anon or service_role JWT "
+            "(starts with eyJ...) from Project Settings → API, or upgrade supabase package (see requirements.txt). "
+            f"Current key env: {key_name}."
+        ) from e
+    raise
 
 @app.route('/')
 def index():
