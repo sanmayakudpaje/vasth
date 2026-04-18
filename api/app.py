@@ -10,9 +10,15 @@ app = Flask(__name__, template_folder='templates')
 
 # Initialize Supabase client
 url = os.getenv("SUPABASE_URL")
-key = os.getenv("SUPABASE_ANON_KEY")
+key = os.getenv("SUPABASE_SERVICE_ROLE_KEY") or os.getenv("SUPABASE_KEY")
 print(f"Supabase URL: {url}")
-print(f"Supabase Key: {key}")
+print(f"Supabase Key set: {'yes' if key else 'no'}")
+
+if not url or not key:
+    raise RuntimeError(
+        "Supabase credentials are missing. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY "
+        "or SUPABASE_KEY in Vercel environment variables."
+    )
 
 supabase: Client = create_client(url, key)
 
